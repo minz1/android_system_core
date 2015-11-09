@@ -62,6 +62,7 @@
 #include "init_parser.h"
 #include "util.h"
 #include "ueventd.h"
+#include "vendor_init.h"
 #include "watchdogd.h"
 #include "vendor_init.h"
 
@@ -650,6 +651,15 @@ static int wait_for_coldboot_done_action(int nargs, char **args) {
     return 0;
 }
 
+static int wait_for_pre_init_done_action(int nargs, char **args) {
+    if (vendor_start_pre_init()) {
+        ERROR("Error: vendor_start_pre_init failed!");
+    } else {
+        NOTICE("vendor_start_pre_init done");
+    }
+    return 0;
+}
+
 /*
  * Writes 512 bytes of output from Hardware RNG (/dev/hw_random, backed
  * by Linux kernel's hw_random framework) into Linux RNG's via /dev/urandom.
@@ -1127,6 +1137,9 @@ int main(int argc, char** argv) {
     queue_builtin_action(mix_hwrng_into_linux_rng_action, "mix_hwrng_into_linux_rng");
     queue_builtin_action(keychord_init_action, "keychord_init");
     queue_builtin_action(console_init_action, "console_init");
+
+    // queue pre init action
+    queue_builtin_action(wait_for_pre_init_done_action, "wait_for_pre_init_done");
 
     // Trigger all the boot actions to get us started.
     action_for_each_trigger("init", action_add_queue_tail);

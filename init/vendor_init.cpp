@@ -33,6 +33,12 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /* init vendor override stubs */
 
 __attribute__ ((weak))
+int vendor_start_pre_init()
+{
+    return 0;
+}
+
+__attribute__ ((weak))
 void vendor_load_properties()
 {
 }
