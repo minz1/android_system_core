@@ -86,10 +86,6 @@ LOCAL_SHARED_LIBRARIES := libcutils liblog libutils
 LOCAL_WHOLE_STATIC_LIBRARIES_x86 := libenc
 LOCAL_WHOLE_STATIC_LIBRARIES_x86_64 := libenc
 
-# Really this should go away entirely or at least not depend on
-# libhardware, but this at least gets us built.
-LOCAL_SHARED_LIBRARIES += libhardware_legacy
-LOCAL_CFLAGS += -DWITH_LIB_HARDWARE
 # t32cb16blend.S does not compile with Clang.
 LOCAL_CLANG_ASFLAGS_arm += -no-integrated-as
 # arch-arm64/col32cb16blend.S does not compile with Clang.
