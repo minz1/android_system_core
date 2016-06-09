@@ -10,8 +10,8 @@ import /init.${ro.hardware}.rc
 import /init.usb.configfs.rc
 import /init.${ro.zygote}.rc
 import /init.trace.rc
-# Include CM's extra init file
-import /init.cm.rc
+# Include XOSP's extra init file
+import /init.xosp.rc
 
 
 on early-init
@@ -693,6 +693,7 @@ service bootanim /system/bin/bootanimation
     group graphics audio
     disabled
     oneshot
+    writepid /dev/cpuset/system-background/tasks
 
 service gatekeeperd /system/bin/gatekeeperd /data/misc/gatekeeper
     class late_start
